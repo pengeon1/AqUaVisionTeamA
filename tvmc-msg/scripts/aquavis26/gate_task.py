@@ -84,14 +84,14 @@ class QualificationTask(StateMachine):
         self.m.set_target_point(DoF.YAW, angle)
 
     def on_orientation(self, vec: Vector3):
-        self.current_yaw = vec.z
-        self.m.set_current_point(DoF.YAW, vec.z)
+        self.current_yaw = vec.vector.z
+        self.m.set_current_point(DoF.YAW, vec.vector.z)
 
     def on_enter_initializing_sensors(self):
         print("Initializing Sensors.")
         self.m.set_pid_constants(DoF.YAW, YAW_KP, YAW_KI, YAW_KD, YAW_ACCEPTABLE_ERROR)
         self.orientation_sub = rospy.Subscriber(
-            f"/{DATA_SOURCE}/orientation", Vector3, self.on_orientation
+            "/euler", Vector3Stamped, self.on_orientation
         )
         self.depth_sub = rospy.Subscriber(f"/{DATA_SOURCE}/depth", Float32, self.on_depth)
 
