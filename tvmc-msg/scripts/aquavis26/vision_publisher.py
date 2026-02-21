@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-import cv2
 import depthai as dai
+import os
+import cv2
 import numpy as np
 import rospy
 from std_msgs.msg import String
 
 # ==========================================
 TARGET_GATE_COLOR = "Green"
-# IMPORTANT: OAK-D requires a compiled .blob file, not a .pt file.
-MODEL_BLOB_PATH = "best.blob" 
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_BLOB_PATH = os.path.join(SCRIPT_DIR, "models", "best_openvino_2022.1_8shave.blob")
 # ==========================================
 
 def detect_gate_color(crop_img):
